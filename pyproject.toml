@@ -1,17 +1,21 @@
 [tool.poetry]
 name = "fastapi_instagram"
 version = "0.1.0"
-description = ""
-authors = ["Shelestov7 <shelestovivan@gmail.com>"]
+description = "Practice project"
+authors = ["Shelestov7 <shelestovivan@gmail.com>", "Alexey Ermilov <alex.erm@yandex.ru>"]
+readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "3.10"
 fastapi = "^0.75.1"
 pydantic = "^1.9.0"
 uvicorn = "^0.17.6"
 alembic = "^1.7.7"
+python-dotenv = "^0.20.0"
+psycopg2-binary = "^2.9.3"
 
 [tool.poetry.dev-dependencies]
+black = "^22.3.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
