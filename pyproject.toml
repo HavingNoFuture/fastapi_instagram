@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "fastapi_instagram"
+version = "0.1.0"
+description = ""
+authors = ["Shelestov7 <shelestovivan@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+fastapi = "^0.75.1"
+pydantic = "^1.9.0"
+uvicorn = "^0.17.6"
+alembic = "^1.7.7"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
