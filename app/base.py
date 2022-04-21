@@ -1,1 +1,1 @@
-from .db import Base
+from .db import Base  # noqa

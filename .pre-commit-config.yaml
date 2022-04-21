@@ -1,5 +1,5 @@
 - repo: 'https://github.com/pre-commit/pre-commit-hooks'
-  rev: 'v4.1.0'
+  rev: 'v4.2.0'
   hooks:
     - id: check-merge-conflict
 
@@ -10,22 +10,22 @@
       args: [ '--in-place', '--remove-all-unused-imports', '--remove-unused-variables' ]
 
 - repo: 'https://github.com/asottile/pyupgrade'
-  rev: 'v2.31.0'
+  rev: 'v2.32.0'
   hooks:
     - id: pyupgrade
-      args: [ '--py36' ]
+      args: [ '--py310' ]
 
 - repo: 'https://github.com/pycqa/isort'
   rev: '5.10.1'
   hooks:
     - id: isort
-      args: [ '--profile', 'black', '--force-alphabetical-sort-within-sections', '-l=120', '--py 36' ]
+      args: [ '--profile', 'black', '--force-alphabetical-sort-within-sections', '-l=120', '--py 310' ]
 
 - repo: 'https://github.com/python/black'
   rev: '22.3.0'
   hooks:
     - id: black
-      args: [ '--target-version=py36', '--line-length=120', '-S' ]
+      args: [ '--target-version=py310', '--line-length=120', '-S' ]
 
 - repo: 'https://gitlab.com/pycqa/flake8'
   rev: '4.0.1'
