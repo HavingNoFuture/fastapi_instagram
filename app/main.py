@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 
-from app.users.routers import users_api
+from app.auth.routes import auth
 
 app = FastAPI()
 
 
-app.mount("/users", users_api)
+app.mount("/auth", auth)
