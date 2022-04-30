@@ -1,3 +1,6 @@
+exclude: '/versions/'
+
+repos:
 - repo: 'https://github.com/pre-commit/pre-commit-hooks'
   rev: 'v4.2.0'
   hooks:
@@ -31,4 +34,4 @@
   rev: '4.0.1'
   hooks:
     - id: flake8
-      args: [ '--max-line-length=120' ]
+      args: [ '--max-line-length=120', '--ignore=E203' ]
