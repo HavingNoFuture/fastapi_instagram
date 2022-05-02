@@ -8,7 +8,7 @@ class UserBase(BaseModel):
 
 
 class UserSignUpPostData(UserBase):
-    """Схема пользователя запрвшиваемая при регистрации"""
+    """Схема пользователя запрашиваемая при регистрации"""
 
     password: str = Field(..., title="Пароль пользователя")
 

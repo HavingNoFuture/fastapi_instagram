@@ -1,4 +1,5 @@
 from passlib.context import CryptContext
+from sqlalchemy.exc import IntegrityError
 
 from app.auth.models import User
 from app.auth.schemas import UserSignUpPostData
@@ -39,9 +40,12 @@ async def create_user(item: UserSignUpPostData) -> dict:
     data['password'] = get_password_hash(data['password'])
     with Session() as s:
         user = User(**data)
-        s.add(user)
-        s.commit()
-        user_data = {'id': user.id, 'email': user.email}
+        try:
+            s.add(user)
+            s.commit()
+            user_data = {'id': user.id, 'email': user.email}
+        except IntegrityError:
+            user_data = {'error': 'Пользователь уже существует!'}
     return user_data
 
 

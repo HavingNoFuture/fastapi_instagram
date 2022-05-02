@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException, status
 
 from app.auth import services
 from app.auth.schemas import UserSignUpPostData, UserSignUpViewData
@@ -6,9 +6,12 @@ from app.auth.schemas import UserSignUpPostData, UserSignUpViewData
 auth = FastAPI()
 
 
-@auth.post("/signup", status_code=201, response_model=UserSignUpViewData)
+@auth.post("/signup", status_code=status.HTTP_201_CREATED, response_model=UserSignUpViewData)
 async def signup(user_data: UserSignUpPostData):
     """
     Регистрация пользователя
     """
-    return await services.create_user(user_data)
+    user_data = await services.create_user(user_data)
+    if 'error' in user_data:
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=user_data.get('error'))
+    return user_data
