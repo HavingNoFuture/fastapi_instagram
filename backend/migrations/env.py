@@ -1,16 +1,14 @@
+# flake8: noqa
 import sys
 from logging.config import fileConfig
 
-from sqlalchemy import engine_from_config
-from sqlalchemy import pool
-
 from alembic import context
-
+from sqlalchemy import engine_from_config, pool
 
 sys.path = ['', '..'] + sys.path[1:]
 
-from app.db import SQLALCHEMY_DATABASE_URL
-from app.base import Base
+from backend.base import Base
+from backend.db import SQLALCHEMY_DATABASE_URL
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

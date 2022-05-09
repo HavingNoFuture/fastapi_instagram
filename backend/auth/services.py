@@ -1,9 +1,9 @@
 from passlib.context import CryptContext
 from sqlalchemy.exc import IntegrityError
 
-from app.auth.models import User
-from app.auth.schemas import UserSignUpPostData
-from app.db import Session
+from backend.auth.models import User
+from backend.auth.schemas import UserSignUpPostData
+from backend.db import Session
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
