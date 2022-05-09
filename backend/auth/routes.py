@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException, status
 
-from app.auth import services
-from app.auth.schemas import UserSignUpPostData, UserSignUpViewData
+from backend.auth import services
+from backend.auth.schemas import UserSignUpPostData, UserSignUpViewData
 
 auth = FastAPI()
 
