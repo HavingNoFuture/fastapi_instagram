@@ -1,12 +1,12 @@
-from fastapi import FastAPI, HTTPException, status
+from fastapi import APIRouter, HTTPException, status
 
 from backend.auth import services
 from backend.auth.schemas import UserSignUpPostData, UserSignUpViewData
 
-auth = FastAPI()
+auth_router = APIRouter()
 
 
-@auth.post("/signup", status_code=status.HTTP_201_CREATED, response_model=UserSignUpViewData)
+@auth_router.post("/signup", status_code=status.HTTP_201_CREATED, response_model=UserSignUpViewData)
 async def signup(user_data: UserSignUpPostData):
     """
     Регистрация пользователя
