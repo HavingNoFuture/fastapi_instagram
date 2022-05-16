@@ -1,5 +1,5 @@
 from auth.models import User  # noqa
-from post.models import Post, Like, Comment  # noqa
+from posts.models import Comment, Like, Post  # noqa
 
 from .db import Base  # noqa
 

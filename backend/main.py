@@ -1,10 +1,10 @@
 from fastapi import FastAPI
 
 from backend.auth.routes import auth
-from backend.post.routes import post_router
+from backend.posts.routes import posts_router
 
 app = FastAPI()
 
 
 app.mount("/auth", auth)
-app.mount("/posts", post_router)
+app.include_router(posts_router, prefix='/posts')

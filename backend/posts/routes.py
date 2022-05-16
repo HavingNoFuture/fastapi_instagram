@@ -2,19 +2,19 @@ import shutil
 import uuid
 from typing import Any
 
-from fastapi import Depends, FastAPI, File, Form, HTTPException, UploadFile
+from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile
 from sqlalchemy.orm import Session
 from starlette import status
 from starlette.status import HTTP_404_NOT_FOUND
 
 from backend.db import get_db
-from backend.post import services
-from backend.post.schemas import CommentCreate, CommentList, PostCreate, PostList, PostSingle
+from backend.posts import services
+from backend.posts.schemas import CommentCreate, CommentList, PostCreate, PostList, PostSingle
 
-post_router = FastAPI()
+posts_router = APIRouter()
 
 
-@post_router.get('/user/{user_id}', response_model=list[PostList])
+@posts_router.get('/user/{user_id}', response_model=list[PostList])
 async def post_list_by_user(user_id: int, db: Session = Depends(get_db)):
     """
     Список публикаций
@@ -25,8 +25,9 @@ async def post_list_by_user(user_id: int, db: Session = Depends(get_db)):
     return posts
 
 
-@post_router.post('/create', status_code=status.HTTP_201_CREATED)
+@posts_router.post('/create', status_code=status.HTTP_201_CREATED)
 async def create_post(*, img: UploadFile = File(...), db: Session = Depends(get_db), text: str = Form(...)):
+    # async def create_post(*, img: UploadFile = File(...), db: Session = Depends(get_db), post_in: PostCreate):
     """
     Создание публикации
     """
@@ -42,7 +43,7 @@ async def create_post(*, img: UploadFile = File(...), db: Session = Depends(get_
     return await services.post.create(db=db, obj_in=post_in)
 
 
-@post_router.get('/{id}', response_model=PostSingle)
+@posts_router.get('/{id}', response_model=PostSingle)
 async def get_post(id: int, db: Session = Depends(get_db)) -> Any:
     """
     Получение публикации
@@ -53,7 +54,7 @@ async def get_post(id: int, db: Session = Depends(get_db)) -> Any:
     return item
 
 
-@post_router.get('/{post_id}/comments', response_model=list[CommentList])
+@posts_router.get('/{post_id}/comments', response_model=list[CommentList])
 async def comment_list_by_post(post_id: int, db: Session = Depends(get_db)):
     """
     Список публикаций
@@ -64,7 +65,7 @@ async def comment_list_by_post(post_id: int, db: Session = Depends(get_db)):
     return comments
 
 
-@post_router.post('/{post_id}/comments/create', status_code=status.HTTP_201_CREATED)
+@posts_router.post('/{post_id}/comments/create', status_code=status.HTTP_201_CREATED)
 async def create_comment(*, db: Session = Depends(get_db), comment_in: CommentCreate, post_id: int):
     """
     Создание комментария
