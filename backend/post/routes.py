@@ -1,20 +1,20 @@
 import shutil
 import uuid
-from typing import List, Any
+from typing import Any
 
-from fastapi import FastAPI, Depends, HTTPException, UploadFile, File, Form
+from fastapi import Depends, FastAPI, File, Form, HTTPException, UploadFile
 from sqlalchemy.orm import Session
 from starlette import status
 from starlette.status import HTTP_404_NOT_FOUND
 
 from backend.db import get_db
 from backend.post import services
-from backend.post.schemas import PostList, PostCreate, PostSingle, CommentList, CommentCreate
+from backend.post.schemas import CommentCreate, CommentList, PostCreate, PostList, PostSingle
 
 post_router = FastAPI()
 
 
-@post_router.get('/user/{user_id}', response_model=List[PostList])
+@post_router.get('/user/{user_id}', response_model=list[PostList])
 async def post_list_by_user(user_id: int, db: Session = Depends(get_db)):
     """
     Список публикаций
@@ -38,7 +38,7 @@ async def create_post(*, img: UploadFile = File(...), db: Session = Depends(get_
             shutil.copyfileobj(img.file, buffer)
     finally:
         img.file.close()
-    post_in = PostCreate(text=text, image=url, user = user_id)
+    post_in = PostCreate(text=text, image=url, user=user_id)
     return await services.post.create(db=db, obj_in=post_in)
 
 
@@ -53,7 +53,7 @@ async def get_post(id: int, db: Session = Depends(get_db)) -> Any:
     return item
 
 
-@post_router.get('/{post_id}/comments', response_model=List[CommentList])
+@post_router.get('/{post_id}/comments', response_model=list[CommentList])
 async def comment_list_by_post(post_id: int, db: Session = Depends(get_db)):
     """
     Список публикаций

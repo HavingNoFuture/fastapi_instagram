@@ -1,10 +1,8 @@
-from typing import List
-
 from sqlalchemy.orm import Session
 
-from .models import Post, Comment
-from .schemas import PostCreate, PostUpdate, CommentCreate, CommentUpdate
 from ..core.services import BaseServices, ModelType
+from .models import Comment, Post
+from .schemas import CommentCreate, CommentUpdate, PostCreate, PostUpdate
 
 
 class PostServices(BaseServices[Post, PostCreate, PostUpdate]):
@@ -16,7 +14,7 @@ class PostServices(BaseServices[Post, PostCreate, PostUpdate]):
         self,
         db: Session,
         user_id: int,
-    ) -> List[ModelType]:
+    ) -> list[ModelType]:
         return db.query(self.model).filter(self.model.user == user_id).all()
 
 
@@ -32,7 +30,7 @@ class CommentServices(BaseServices[Comment, CommentCreate, CommentUpdate]):
         self,
         db: Session,
         post_id: int,
-    ) -> List[ModelType]:
+    ) -> list[ModelType]:
         """
         Список комментариев к посту
         """
