@@ -8,8 +8,8 @@ from starlette import status
 from starlette.status import HTTP_404_NOT_FOUND
 
 from backend.db import get_db
-from backend.post import services
-from backend.post.schemas import CommentCreate, CommentList, PostCreate, PostList, PostSingle
+from backend.posts import services
+from backend.posts.schemas import CommentCreate, CommentList, PostCreate, PostList, PostSingle
 
 post_router = FastAPI()
 
@@ -27,6 +27,7 @@ async def post_list_by_user(user_id: int, db: Session = Depends(get_db)):
 
 @post_router.post('/create', status_code=status.HTTP_201_CREATED)
 async def create_post(*, img: UploadFile = File(...), db: Session = Depends(get_db), text: str = Form(...)):
+    # async def create_post(*, img: UploadFile = File(...), db: Session = Depends(get_db), post_in: PostCreate):
     """
     Создание публикации
     """

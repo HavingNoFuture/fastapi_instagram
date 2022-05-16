@@ -36,15 +36,11 @@ class PostCreate(PostBaseCreateUpdate):
     Схема создания публикации
     """
 
-    pass
-
 
 class PostUpdate(PostBaseCreateUpdate):
     """
     Схема редактирования публикации
     """
-
-    pass
 
 
 class PostSingle(PostBase):
@@ -87,12 +83,8 @@ class CommentCreate(CommentBaseCreateUpdate):
     Схема созданию комментариев
     """
 
-    pass
-
 
 class CommentUpdate(CommentBaseCreateUpdate):
     """
     Схема изменения комментариев
     """
-
-    pass
