@@ -31,8 +31,9 @@ cd backend/
 poetry install
 ```
 
-4. Запуск бекенда
+4. Запуск бекенда (из корня проекта)
 ```
+cd ..
 uvicorn backend.main:app --reload
 ```
 
