@@ -7,4 +7,4 @@ app = FastAPI()
 
 
 app.mount("/auth", auth)
-app.mount("/post", post_router)
+app.mount("/posts", post_router)
