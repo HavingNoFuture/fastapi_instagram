@@ -490,18 +490,6 @@ pymysql = ["pymysql (<1)", "pymysql"]
 sqlcipher = ["sqlcipher3-binary"]
 
 [[package]]
-name = "sqlalchemy-imageattach"
-version = "1.1.0"
-description = "SQLAlchemy extension for attaching images to entity objects"
-category = "main"
-optional = false
-python-versions = "*"
-
-[package.dependencies]
-SQLAlchemy = ">=0.9.0"
-Wand = ">=0.3.0"
-
-[[package]]
 name = "starlette"
 version = "0.17.1"
 description = "The little ASGI library that shines."
@@ -565,22 +553,10 @@ six = ">=1.9.0,<2"
 docs = ["proselint (>=0.10.2)", "sphinx (>=3)", "sphinx-argparse (>=0.2.5)", "sphinx-rtd-theme (>=0.4.3)", "towncrier (>=21.3)"]
 testing = ["coverage (>=4)", "coverage-enable-subprocess (>=1)", "flaky (>=3)", "pytest (>=4)", "pytest-env (>=0.6.2)", "pytest-freezegun (>=0.4.1)", "pytest-mock (>=2)", "pytest-randomly (>=1)", "pytest-timeout (>=1)", "packaging (>=20.0)"]
 
-[[package]]
-name = "wand"
-version = "0.6.7"
-description = "Ctypes-based simple MagickWand API binding for Python"
-category = "main"
-optional = false
-python-versions = "*"
-
-[package.extras]
-doc = ["Sphinx (>=2.4.1)"]
-test = ["pytest (>=5.3.5)"]
-
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "875a3b31c3c2ad33bd78817f6f99cd17438cac5250262d2a11d4754654eb4a5c"
+content-hash = "051221f0639d7f0d85d3b567daf0d421f7b8c080e261238e355973d89afdc070"
 
 [metadata.files]
 alembic = [
@@ -1092,10 +1068,6 @@ sqlalchemy = [
     {file = "SQLAlchemy-1.4.36-cp39-cp39-win_amd64.whl", hash = "sha256:cb441ca461bf97d00877b607f132772644b623518b39ced54da433215adce691"},
     {file = "SQLAlchemy-1.4.36.tar.gz", hash = "sha256:64678ac321d64a45901ef2e24725ec5e783f1f4a588305e196431447e7ace243"},
 ]
-sqlalchemy-imageattach = [
-    {file = "SQLAlchemy-ImageAttach-1.1.0.tar.gz", hash = "sha256:a9e3d56da889119e2105b3fee660ec259bb3b51be28173efb1ba129a52710ec4"},
-    {file = "SQLAlchemy_ImageAttach-1.1.0-py2.py3-none-any.whl", hash = "sha256:7a143a820767458ad07380a4e405126bba5cfe5b74478f317d4d58e44cdc1df4"},
-]
 starlette = [
     {file = "starlette-0.17.1-py3-none-any.whl", hash = "sha256:26a18cbda5e6b651c964c12c88b36d9898481cd428ed6e063f5f29c418f73050"},
     {file = "starlette-0.17.1.tar.gz", hash = "sha256:57eab3cc975a28af62f6faec94d355a410634940f10b30d68d31cb5ec1b44ae8"},
@@ -1115,8 +1087,4 @@ uvicorn = [
 virtualenv = [
     {file = "virtualenv-20.14.1-py2.py3-none-any.whl", hash = "sha256:e617f16e25b42eb4f6e74096b9c9e37713cf10bf30168fb4a739f3fa8f898a3a"},
     {file = "virtualenv-20.14.1.tar.gz", hash = "sha256:ef589a79795589aada0c1c5b319486797c03b67ac3984c48c669c0e4f50df3a5"},
-]
-wand = [
-    {file = "Wand-0.6.7-py2.py3-none-any.whl", hash = "sha256:5ba497e90741a05ebce4603b04ee843150c566482a753554da54dc57d8503bba"},
-    {file = "Wand-0.6.7.tar.gz", hash = "sha256:ebc01bccc25dba68414ab55b482341f9ad2b197d7f49d5e724f339bbf63fb6db"},
 ]

@@ -17,7 +17,6 @@ python-jose = {extras = ["cryptography"], version = "^3.3.0"}
 passlib = {extras = ["bcrypt"], version = "^1.7.4"}
 asyncpg = "^0.25.0"
 databases = "^0.5.5"
-SQLAlchemy-ImageAttach = "^1.1.0"
 python-multipart = "^0.0.5"
 
 [tool.poetry.dev-dependencies]
