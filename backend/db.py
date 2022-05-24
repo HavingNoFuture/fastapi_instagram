@@ -15,7 +15,11 @@ Base = declarative_base()
 Session = sessionmaker(bind=engine)
 
 
-def get_db():
+def get_db() -> Session:
+    """
+    Получение сессии БД + гарантированное ее закрытие
+    :return: Session
+    """
     try:
         db = Session()
         yield db
