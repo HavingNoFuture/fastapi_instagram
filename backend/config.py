@@ -1,18 +1,12 @@
-import os
-from pathlib import Path
-
-from dotenv import load_dotenv
-
-env_path = Path(__file__).resolve().parents[1] / '.env'
-load_dotenv(dotenv_path=env_path)
+from pydantic import BaseSettings
 
 
-class Settings:
+class Settings(BaseSettings):
     """
     Настройки приложения
     """
 
-    SQLALCHEMY_DATABASE_URL: str = os.getenv("SQLALCHEMY_DATABASE_URL")
+    SQLALCHEMY_DATABASE_URL: str = ''
 
 
-settings = Settings()
+settings = Settings('../.env')  # Файл с переменными окружения должен лежать в корне проекта (вне '/backend/')
