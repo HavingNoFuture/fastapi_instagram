@@ -7,6 +7,8 @@ from sqlalchemy.orm import Session
 from starlette import status
 from starlette.status import HTTP_404_NOT_FOUND
 
+from backend.auth.models import User
+from backend.auth.services import get_current_user
 from backend.db import get_db
 from backend.posts import services
 from backend.posts.schemas import CommentCreate, CommentList, PostCreate, PostList, PostSingle
@@ -26,20 +28,24 @@ async def post_list_by_user(user_id: int, db: Session = Depends(get_db)):
 
 
 @posts_router.post('/create', status_code=status.HTTP_201_CREATED)
-async def create_post(*, img: UploadFile = File(...), db: Session = Depends(get_db), text: str = Form(...)):
+async def create_post(
+    *,
+    img: UploadFile = File(...),
+    db: Session = Depends(get_db),
+    text: str = Form(...),
+    user: User = Depends(get_current_user),
+):
     # async def create_post(*, img: UploadFile = File(...), db: Session = Depends(get_db), post_in: PostCreate):
     """
     Создание публикации
     """
-    # todo: Добавить прокидывание текущего пользователя
-    user_id = 1
     url = str('media/' + f'{uuid.uuid4()}{img.filename}')
     try:
         with open(url, "wb") as buffer:
             shutil.copyfileobj(img.file, buffer)
     finally:
         img.file.close()
-    post_in = PostCreate(text=text, image=url, user=user_id)
+    post_in = PostCreate(text=text, image=url, user=user.id)
     return await services.post.create(db=db, obj_in=post_in)
 
 
@@ -66,7 +72,9 @@ async def comment_list_by_post(post_id: int, db: Session = Depends(get_db)):
 
 
 @posts_router.post('/{post_id}/comments/create', status_code=status.HTTP_201_CREATED)
-async def create_comment(*, db: Session = Depends(get_db), comment_in: CommentCreate, post_id: int):
+async def create_comment(
+    *, db: Session = Depends(get_db), user: User = Depends(get_current_user), comment_in: CommentCreate, post_id: int
+):
     """
     Создание комментария
     """

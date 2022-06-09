@@ -1,17 +1,26 @@
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, status
+from fastapi.security import HTTPBasic
 
-from backend.auth import services
-from backend.auth.schemas import UserSignUpPostData, UserSignUpViewData
+from backend.auth.schemas import UserSignInPostData, UserSignUpPostData, UserSignUpViewData
+from backend.auth.services import AuthService
+from backend.db import model_to_dict
 
 auth_router = APIRouter()
 
+security = HTTPBasic()
+
 
 @auth_router.post("/signup", status_code=status.HTTP_201_CREATED, response_model=UserSignUpViewData)
-async def signup(user_data: UserSignUpPostData):
+def signup(user_data: UserSignUpPostData):
     """
     Регистрация пользователя
     """
-    user_data = await services.create_user(user_data)
-    if 'error' in user_data:
-        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=user_data.get('error'))
-    return user_data
+    return model_to_dict(AuthService.create_user(user_data))
+
+
+@auth_router.post("/signin", status_code=status.HTTP_201_CREATED, response_model=UserSignUpViewData)
+def signin(user_data: UserSignInPostData):
+    """
+    Логин пользователя
+    """
+    return model_to_dict(AuthService.authenticate_user(user_data))
