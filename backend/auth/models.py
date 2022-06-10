@@ -10,17 +10,17 @@ class User(Base):
     __tablename__ = "user"
 
     id = Column(Integer, primary_key=True, index=True)
-    email = Column(String(100), unique=True, nullable=False)
-    password = Column(String(150), nullable=False)
-    first_name = Column(String(75))
-    last_name = Column(String(75))
+    username = Column(String(25), unique=True, nullable=False)
+    email = Column(String(50), unique=True, nullable=False)
+    password = Column(String(25), nullable=False)
+    first_name = Column(String(25))
+    last_name = Column(String(25))
     signup_date = Column(DateTime(), server_default=now())
     is_active = Column(Boolean, default=False)
     is_admin = Column(Boolean, default=False)
 
-    def __repr__(self):
-        return f'Пользователь (id={self.id!r}, email={self.email!r})'
+    class Config:
+        orm_mode = True
 
-    def __init__(self, email, password):
-        self.email = email
-        self.password = password
+    def __repr__(self):
+        return f'Пользователь (id={self.id!r}, username={self.username!r})'

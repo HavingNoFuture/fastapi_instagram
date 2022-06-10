@@ -1,52 +1,81 @@
+from fastapi import Depends, HTTPException, status
+from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from passlib.context import CryptContext
 from sqlalchemy.exc import IntegrityError
 
 from backend.auth.models import User
-from backend.auth.schemas import UserSignUpPostData
-from backend.db import Session
+from backend.auth.schemas import UserSignInPostData, UserSignUpPostData
+from backend.db import db_session
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
+security = HTTPBasic()
 
-def verify_password(plain_password: str, hashed_password: str) -> bool:
+
+def get_current_user(credentials: HTTPBasicCredentials = Depends(security)) -> User:
     """
-    Возвращает подтверждение пароля
-    :param plain_password: Пароль в НЕзахешированном виде
-    :param hashed_password: Пароль в захешированном виде
-    :return: Соответвтсвует ли пароль хешу
+    Возвращает текущего пользователя
     """
-    return pwd_context.verify(plain_password, hashed_password)
+    return AuthService.authenticate_user(credentials)
 
 
-def get_password_hash(password: str) -> str:
+class AuthService:
     """
-    Возвращает хеш пароля
-    :param password: Пароль
-    :return: Хеш пароля
+    Сервис авторизации пользователя
     """
-    return pwd_context.hash(password)
 
+    @classmethod
+    def verify_password(cls, plain_password: str, hashed_password: str) -> bool:
+        """
+        Возвращает подтверждение пароля
+        :param plain_password: Пароль в НЕзахешированном виде
+        :param hashed_password: Пароль в захешированном виде
+        :return: Соответвтсвует ли пароль хешу
+        """
+        return pwd_context.verify(plain_password, hashed_password)
 
-# region: User
+    @classmethod
+    def get_password_hash(cls, password: str) -> str:
+        """
+        Возвращает хеш пароля
+        :param password: Пароль
+        :return: Хеш пароля
+        """
+        return pwd_context.hash(password)
 
+    @classmethod
+    def create_user(cls, item: UserSignUpPostData) -> dict:
+        """
+        Создание пользователя в БД
+        :param item: Данные пользователя для создания
+        :return: Данные созданного пользователя
+        """
+        user_data = item.dict()
+        user_data['password'] = cls.get_password_hash(user_data['password'])
 
-async def create_user(item: UserSignUpPostData) -> dict:
-    """
-    Создание пользователя в БД
-    :param item: Данные пользователя для создания: email и пароль
-    :return: Данные созданного пользователя: id и email
-    """
-    data = item.dict()
-    data['password'] = get_password_hash(data['password'])
-    with Session() as s:
-        user = User(**data)
+        user = User(**user_data)
         try:
-            s.add(user)
-            s.commit()
-            user_data = {'id': user.id, 'email': user.email}
+            with db_session() as s:
+                s.add(user)
+                s.commit()
+                s.refresh(user)
+                return user
         except IntegrityError:
-            user_data = {'error': 'Пользователь уже существует!'}
-    return user_data
+            raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail='Пользователь уже существует!')
 
-
-# endregion: User
+    @classmethod
+    def authenticate_user(cls, item: UserSignInPostData | HTTPBasicCredentials) -> User:
+        """
+        Аутентификация пользователя
+        :param item: Данные пользователя для логина
+        """
+        user_data = item.dict()
+        with db_session() as s:
+            user = s.query(User).filter(User.username == user_data['username']).first()
+        if not cls.verify_password(user_data['password'], user.password):
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Некорректный логин или пароль",
+                headers={"WWW-Authenticate": "Basic"},
+            )
+        return user
