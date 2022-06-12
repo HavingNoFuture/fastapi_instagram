@@ -7,11 +7,15 @@
 ## Основные технологии:
 * Python 3.10
 * FastApi
-* SqlAlchemy
-* Alembic
 * PostgreSQL
+* SqlAlchemy + Alembic
 * VueJS
+* Docker
 
+## Запуск проекта:
+```
+docker-compose up
+```
 
 ## Инструкция по установке:
 

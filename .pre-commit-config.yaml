@@ -22,7 +22,8 @@ repos:
   rev: '5.10.1'
   hooks:
     - id: isort
-      args: [ '--profile', 'black', '--force-alphabetical-sort-within-sections', '-l=120', '--py 310' ]
+      args: [ '--profile', 'black', '--force-alphabetical-sort-within-sections',
+              '--src=./backend/', '-l=120', '--py 310' ]
 
 - repo: 'https://github.com/python/black'
   rev: '22.3.0'

@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 
-from ..core.services import BaseServices, ModelType
+from core.services import BaseServices, ModelType
+
 from .models import Comment, Post
 from .schemas import CommentCreate, CommentUpdate, PostCreate, PostUpdate
 
