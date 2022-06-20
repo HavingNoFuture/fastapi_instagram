@@ -3,9 +3,9 @@ from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from passlib.context import CryptContext
 from sqlalchemy.exc import IntegrityError
 
-from backend.auth.models import User
-from backend.auth.schemas import UserSignInPostData, UserSignUpPostData
-from backend.db import db_session
+from auth.models import User
+from auth.schemas import UserSignInPostData, UserSignUpPostData
+from db import db_session
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 

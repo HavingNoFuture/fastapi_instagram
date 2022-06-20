@@ -1,0 +1,30 @@
+version: "3.3"
+services:
+
+  db:
+    image: postgres:14
+    volumes:
+      - db:/var/lib/postgresql/data/
+    env_file:
+      - .env
+
+  backend:
+    build: ./backend
+    env_file:
+      - .env
+    depends_on:
+      - db
+    network_mode: host
+    ports:
+      - "8000:8000"
+
+  frontend:
+    build: ./frontend
+    network_mode: host
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+
+volumes:
+  db:

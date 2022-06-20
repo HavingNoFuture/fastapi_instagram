@@ -6,7 +6,7 @@ from sqlalchemy import create_engine, inspect
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import Session, sessionmaker
 
-from backend.config import settings
+from config import settings
 
 SQLALCHEMY_DATABASE_URL = settings.SQLALCHEMY_DATABASE_URL
 engine = create_engine(SQLALCHEMY_DATABASE_URL)

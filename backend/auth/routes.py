@@ -1,9 +1,9 @@
 from fastapi import APIRouter, status
 from fastapi.security import HTTPBasic
 
-from backend.auth.schemas import UserSignInPostData, UserSignUpPostData, UserSignUpViewData
-from backend.auth.services import AuthService
-from backend.db import model_to_dict
+from auth.schemas import UserSignInPostData, UserSignUpPostData, UserSignUpViewData
+from auth.services import AuthService
+from db import model_to_dict
 
 auth_router = APIRouter()
 

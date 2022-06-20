@@ -7,8 +7,8 @@ from sqlalchemy import engine_from_config, pool
 
 sys.path = ['', '..'] + sys.path[1:]
 
-from backend.base import Base
-from backend.db import SQLALCHEMY_DATABASE_URL
+from base import Base
+from db import SQLALCHEMY_DATABASE_URL
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

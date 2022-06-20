@@ -7,11 +7,11 @@ from sqlalchemy.orm import Session
 from starlette import status
 from starlette.status import HTTP_404_NOT_FOUND
 
-from backend.auth.models import User
-from backend.auth.services import get_current_user
-from backend.db import get_db
-from backend.posts import services
-from backend.posts.schemas import CommentCreate, CommentList, PostCreate, PostList, PostSingle
+from auth.models import User
+from auth.services import get_current_user
+from db import get_db
+from posts import services
+from posts.schemas import CommentCreate, CommentList, PostCreate, PostList, PostSingle
 
 posts_router = APIRouter()
 

@@ -1,7 +1,7 @@
 from sqlalchemy import Boolean, Column, DateTime, Integer, String
 from sqlalchemy.sql.functions import now
 
-from backend.db import Base
+from db import Base
 
 
 class User(Base):
